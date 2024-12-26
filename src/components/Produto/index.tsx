@@ -1,43 +1,29 @@
-import { Produto as ProdutoType } from '../../App'
-import * as S from './styles'
+// src/containers/Produtos.tsx
+import { Produto } from '../../App'
 
-type Props = {
-  produto: ProdutoType
-  aoComprar: (produto: ProdutoType) => void
-  favoritar: (produto: ProdutoType) => void
-  estaNosFavoritos: boolean
+interface ProdutosProps {
+  produtos: Produto[]
+  favoritos: Produto[]
+  favoritar: (produto: Produto) => void
+  adicionarAoCarrinho: (produto: Produto) => void
 }
 
-export const paraReal = (valor: number) =>
-  new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(
-    valor
-  )
-
-const ProdutoComponent = ({
-  produto,
-  aoComprar,
-  favoritar,
-  estaNosFavoritos
-}: Props) => {
+const Produtos: React.FC<ProdutosProps> = ({ produtos, favoritos, favoritar, adicionarAoCarrinho }) => {
   return (
-    <S.Produto>
-      <S.Capa>
-        <img src={produto.imagem} alt={produto.nome} />
-      </S.Capa>
-      <S.Titulo>{produto.nome}</S.Titulo>
-      <S.Prices>
-        <strong>{paraReal(produto.preco)}</strong>
-      </S.Prices>
-      <S.BtnComprar onClick={() => favoritar(produto)} type="button">
-        {estaNosFavoritos
-          ? '- Remover dos favoritos'
-          : '+ Adicionar aos favoritos'}
-      </S.BtnComprar>
-      <S.BtnComprar onClick={() => aoComprar(produto)} type="button">
-        Adicionar ao carrinho
-      </S.BtnComprar>
-    </S.Produto>
+    <div>
+      {produtos.map((produto) => (
+        <div key={produto.id}>
+          <img src={produto.imagem} alt={produto.nome} />
+          <h3>{produto.nome}</h3>
+          <p>R$ {produto.preco}</p>
+          <button onClick={() => adicionarAoCarrinho(produto)}>Adicionar ao Carrinho</button>
+          <button onClick={() => favoritar(produto)}>
+            {favoritos.some((fav) => fav.id === produto.id) ? 'Remover dos Favoritos' : 'Adicionar aos Favoritos'}
+          </button>
+        </div>
+      ))}
+    </div>
   )
 }
 
-export default ProdutoComponent
+export default Produtos
