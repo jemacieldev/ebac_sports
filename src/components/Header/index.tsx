@@ -1,4 +1,3 @@
-// src/components/Header.tsx
 import { useSelector } from 'react-redux'
 
 const Header = ({ favoritos, itensNoCarrinho }: any) => {

@@ -1,29 +1,22 @@
-// src/containers/Produtos.tsx
-import { Produto } from '../../App'
+import type { Produto as ProdutoType } from '../../App';
 
-interface ProdutosProps {
-  produtos: Produto[]
-  favoritos: Produto[]
-  favoritar: (produto: Produto) => void
-  adicionarAoCarrinho: (produto: Produto) => void
-}
+type ProdutoProps = {
+  produto: ProdutoType;
+  estaNosFavoritos: boolean;
+  favoritar: (produto: ProdutoType) => void;
+  aoComprar: (produto: ProdutoType) => void;
+};
 
-const Produtos: React.FC<ProdutosProps> = ({ produtos, favoritos, favoritar, adicionarAoCarrinho }) => {
+const Produto = ({ produto, estaNosFavoritos, favoritar, aoComprar }: ProdutoProps) => {
   return (
     <div>
-      {produtos.map((produto) => (
-        <div key={produto.id}>
-          <img src={produto.imagem} alt={produto.nome} />
-          <h3>{produto.nome}</h3>
-          <p>R$ {produto.preco}</p>
-          <button onClick={() => adicionarAoCarrinho(produto)}>Adicionar ao Carrinho</button>
-          <button onClick={() => favoritar(produto)}>
-            {favoritos.some((fav) => fav.id === produto.id) ? 'Remover dos Favoritos' : 'Adicionar aos Favoritos'}
-          </button>
-        </div>
-      ))}
+      <h3>{produto.nome}</h3>
+      <button onClick={() => favoritar(produto)}>
+        {estaNosFavoritos ? 'Remover dos Favoritos' : 'Adicionar aos Favoritos'}
+      </button>
+      <button onClick={() => aoComprar(produto)}>Comprar</button>
     </div>
-  )
-}
+  );
+};
 
-export default Produtos
+export default Produto;
