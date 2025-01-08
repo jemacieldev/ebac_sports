@@ -7,7 +7,7 @@ interface FavoritesState {
 }
 
 const initialState: FavoritesState = {
-  items: [],
+  items: []
 }
 
 const favoritesSlice = createSlice({
@@ -15,14 +15,18 @@ const favoritesSlice = createSlice({
   initialState,
   reducers: {
     toggleFavorite: (state, action: PayloadAction<Produto>) => {
-      const isFavorite = state.items.some((item) => item.id === action.payload.id)
+      const isFavorite = state.items.some(
+        (item) => item.id === action.payload.id
+      )
       if (isFavorite) {
-        state.items = state.items.filter((item) => item.id !== action.payload.id)
+        state.items = state.items.filter(
+          (item) => item.id !== action.payload.id
+        )
       } else {
         state.items.push(action.payload)
       }
-    },
-  },
+    }
+  }
 })
 
 export const { toggleFavorite } = favoritesSlice.actions

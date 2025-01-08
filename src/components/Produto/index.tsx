@@ -1,13 +1,18 @@
-import type { Produto as ProdutoType } from '../../App';
+import type { Produto as ProdutoType } from '../../App'
 
 type ProdutoProps = {
-  produto: ProdutoType;
-  estaNosFavoritos: boolean;
-  favoritar: (produto: ProdutoType) => void;
-  aoComprar: (produto: ProdutoType) => void;
-};
+  produto: ProdutoType
+  estaNosFavoritos: boolean
+  favoritar: (produto: ProdutoType) => void
+  aoComprar: (produto: ProdutoType) => void
+}
 
-const Produto = ({ produto, estaNosFavoritos, favoritar, aoComprar }: ProdutoProps) => {
+const Produto = ({
+  produto,
+  estaNosFavoritos,
+  favoritar,
+  aoComprar
+}: ProdutoProps) => {
   return (
     <div>
       <h3>{produto.nome}</h3>
@@ -16,7 +21,7 @@ const Produto = ({ produto, estaNosFavoritos, favoritar, aoComprar }: ProdutoPro
       </button>
       <button onClick={() => aoComprar(produto)}>Comprar</button>
     </div>
-  );
-};
+  )
+}
 
-export default Produto;
+export default Produto
