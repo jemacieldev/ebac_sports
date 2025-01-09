@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux'
+import React from 'react' // Importando React para JSX funcionar corretamente
 
 const Header = ({ favoritos, itensNoCarrinho }: any) => {
   return (

@@ -1,38 +1,25 @@
-import { Produto as ProdutoType } from '../App' // Certifique-se de que o tipo Produto está correto
-import Produto from '../components/Produto' // O caminho do Produto
-import * as S from './styles'
+import React from 'react'
+import ProdutoComponent, { Produto } from '../components/Produto' // Corrigindo a importação
 
-type Props = {
-  produtos: ProdutoType[] // Espera um array de produtos
-  favoritos: ProdutoType[]
-  adicionarAoCarrinho: (produto: ProdutoType) => void
-  favoritar: (produto: ProdutoType) => void
+interface ProdutosComponentProps {
+  produtos: Produto[] // Usando a interface Produto do componente Produto
+  favoritos: Produto[]
+  favoritar: (produto: Produto) => void
+  adicionarAoCarrinho: (produto: Produto) => void
 }
 
-const ProdutosComponent = ({
-  produtos = [],
-  favoritos = [],
-  adicionarAoCarrinho,
-  favoritar
-}: Props) => {
-  const produtoEstaNosFavoritos = (produto: ProdutoType) => {
-    const produtoId = produto.id
-    const IdsDosFavoritos = favoritos.map((f) => f.id)
-    return IdsDosFavoritos.includes(produtoId) // Retorna se o produto está nos favoritos
-  }
-
+const ProdutosComponent: React.FC<ProdutosComponentProps> = ({
+  produtos,
+  favoritos,
+  favoritar,
+  adicionarAoCarrinho
+}) => {
   return (
-    <S.Produtos>
+    <div>
       {produtos.map((produto) => (
-        <Produto
-          key={produto.id}
-          produto={produto} // Passa cada produto individualmente
-          estaNosFavoritos={produtoEstaNosFavoritos(produto)} // Passa esta informação
-          favoritar={favoritar}
-          aoComprar={adicionarAoCarrinho}
-        />
+        <ProdutoComponent key={produto.id} produto={produto} />
       ))}
-    </S.Produtos>
+    </div>
   )
 }
 

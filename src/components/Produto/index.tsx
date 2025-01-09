@@ -1,27 +1,25 @@
-import type { Produto as ProdutoType } from '../../App'
+import React from 'react'
 
-type ProdutoProps = {
-  produto: ProdutoType
-  estaNosFavoritos: boolean
-  favoritar: (produto: ProdutoType) => void
-  aoComprar: (produto: ProdutoType) => void
+// Definindo a interface Produto diretamente aqui
+export interface Produto {
+  id: string
+  nome: string
+  preco: number
+  imagem: string
+  // Outros campos que você tenha no produto, como descrição, categoria, etc.
 }
 
-const Produto = ({
-  produto,
-  estaNosFavoritos,
-  favoritar,
-  aoComprar
-}: ProdutoProps) => {
+interface ProdutoProps {
+  produto: Produto
+}
+
+const ProdutoComponent: React.FC<ProdutoProps> = ({ produto }) => {
   return (
     <div>
       <h3>{produto.nome}</h3>
-      <button onClick={() => favoritar(produto)}>
-        {estaNosFavoritos ? 'Remover dos Favoritos' : 'Adicionar aos Favoritos'}
-      </button>
-      <button onClick={() => aoComprar(produto)}>Comprar</button>
+      <p>{produto.preco}</p>
     </div>
   )
 }
 
-export default Produto
+export default ProdutoComponent
