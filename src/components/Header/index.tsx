@@ -1,14 +1,32 @@
-import React from 'react' // Importando React para JSX funcionar corretamente
+import React from 'react' // Importação do React
+import { useSelector } from 'react-redux'
+import * as S from './styles'
+import cesta from '../../assets/cesta.png'
+import { paraReal } from '../Produto'
+import { store } from '../../store'
 
-const Header = ({ favoritos, itensNoCarrinho }: any) => {
+export type RootState = ReturnType<typeof store.getState>
+
+const Header = () => {
+  const itens = useSelector((state: RootState) => state.carrinho.itens)
+  const itensfav = useSelector((state: RootState) => state.favorito.itens)
+
+  const valorTotal = itens.reduce((acc: any, item: { preco: any }) => {
+    acc += item.preco
+    return acc
+  }, 0)
+
   return (
-    <header>
+    <S.Header>
+      <h1>EBAC Sports</h1>
       <div>
-        <h1>Meu Carrinho</h1>
-        <p>Itens no carrinho: {itensNoCarrinho.length}</p>
-        <p>Favoritos: {favoritos.length}</p>
+        <span>{itensfav.length} favoritos</span>
+        <img src={cesta} alt="Cesta" />
+        <span>
+          {itens.length} itens, valor total: {paraReal(valorTotal)}
+        </span>
       </div>
-    </header>
+    </S.Header>
   )
 }
 

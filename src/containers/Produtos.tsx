@@ -1,25 +1,23 @@
+import Produto from '../components/Produto'
+import { useGetProdutosQuery } from '../services/api'
+
 import React from 'react'
-import ProdutoComponent, { Produto } from '../components/Produto' // Corrigindo a importação
 
-interface ProdutosComponentProps {
-  produtos: Produto[] // Usando a interface Produto do componente Produto
-  favoritos: Produto[]
-  favoritar: (produto: Produto) => void
-  adicionarAoCarrinho: (produto: Produto) => void
-}
+import * as S from './styles'
 
-const ProdutosComponent: React.FC<ProdutosComponentProps> = ({
-  produtos,
-  favoritos,
-  favoritar,
-  adicionarAoCarrinho
-}) => {
+const ProdutosComponent = () => {
+  const { data: produtos, isLoading } = useGetProdutosQuery()
+
+  if (isLoading) return <h2>Carregando...</h2>
+
   return (
-    <div>
-      {produtos.map((produto) => (
-        <ProdutoComponent key={produto.id} produto={produto} />
-      ))}
-    </div>
+    <>
+      <S.Produtos>
+        {produtos?.map((produto) => (
+          <Produto key={produto.id} produto={produto} />
+        ))}
+      </S.Produtos>
+    </>
   )
 }
 

@@ -1,35 +1,31 @@
-import React from 'react'
-import { GlobalStyle } from './styles/styles' // Certificando-se de que o GlobalStyle está correto
-import { useGetProdutosQuery } from './slices/apiSlice' // Importando o hook para obter produtos
+import { Provider } from 'react-redux'
 import Header from './components/Header'
-import ProdutosComponent from './containers/Produtos'
-import { Produto } from './components/Produto'
+import Produtos from './containers/Produtos'
 
-const App: React.FC = () => {
-  // Ajuste: passando um objeto vazio, se necessário, para `useGetProdutosQuery()`
-  const { data: produtos, isLoading, error } = useGetProdutosQuery({})
+import { store } from './store'
 
-  // Definindo arrays de produtos com os tipos corretos
-  const favoritos: Produto[] = []
-  const carrinho: Produto[] = []
+import { GlobalStyle } from './styles'
+import React from 'react'
 
+export type Produto = {
+  produto: any
+  find(arg0: (fav: any) => boolean): unknown
+  filter(arg0: (p: any) => boolean): unknown
+  id: number
+  nome: string
+  preco: number
+  imagem: string
+}
+
+function App() {
   return (
-    <>
+    <Provider store={store}>
       <GlobalStyle />
       <div className="container">
-        <Header favoritos={favoritos} itensNoCarrinho={carrinho} />
-        {isLoading && <p>Carregando produtos...</p>}
-        {error && <p>Erro ao carregar produtos. Tente novamente mais tarde.</p>}
-        {!isLoading && !error && produtos && (
-          <ProdutosComponent
-            produtos={produtos}
-            favoritos={favoritos}
-            favoritar={() => {}}
-            adicionarAoCarrinho={() => {}}
-          />
-        )}
+        <Header />
+        <Produtos />
       </div>
-    </>
+    </Provider>
   )
 }
 
